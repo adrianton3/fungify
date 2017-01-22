@@ -76,7 +76,7 @@ convert = (root) ->
 	playfield.stringify()
 
 
-{ sample1 } = fungify.samples
+{ sample1, sample2 } = fungify.samples
 
 
-console.log convert sample1
+console.log convert sample2

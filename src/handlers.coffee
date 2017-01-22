@@ -69,10 +69,21 @@ varHandler = (recurse, node, place, resolve, line, column) ->
 numberHandler = (recurse, node, place, resolve, line, column) ->
 	{ value } = node
 
-	place line, column, (String value)
+	digits = Array.from value.toString 9
+
+	currentLine = line
+	place currentLine, column, (String digits[0])
+	currentLine++
+
+	for index in [1...digits.length]
+		place (line + currentLine + 0), column, '9'
+		place (line + currentLine + 1), column, '*'
+		place (line + currentLine + 2), column, (String digits[index])
+		place (line + currentLine + 3), column, '+'
+		currentLine += 4
 
 	{
-		line: line + 1
+		line: currentLine
 		column: column + 1
 	}
 

@@ -16,8 +16,12 @@ sample1 = makeIf(
 )
 
 
+sample2 = makeSub 'printInt', (makeNumber 200)
+
+
 window.fungify ?= {}
 window.fungify.samples ?= {}
 Object.assign window.fungify.samples, {
 	sample1
+	sample2
 }
