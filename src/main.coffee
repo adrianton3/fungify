@@ -6,8 +6,14 @@ makeEnv = ->
 	mapping = new Map
 
 	resolve = (name) ->
-		mapping.set name, count
-		count++
+		if mapping.has name
+			mapping.get name
+		else
+			prevCount = count
+			mapping.set name, count
+			count++
+			prevCount
+
 
 	{ resolve }
 
