@@ -132,7 +132,7 @@ assignmentHandler = (recurse, node, place, resolve, line, column) ->
 	place (line + 0), column, '0'
 	place (line + 1), column, (String address)
 	expressionLoc = recurse expression, (line + 2), column
-	place expressionLoc, column, 'p'
+	place expressionLoc.line, column, 'p'
 
 	{
 		line: expressionLoc.line + 2

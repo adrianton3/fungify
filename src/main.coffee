@@ -6,7 +6,7 @@ makeEnv = ->
 	mapping = new Map
 
 	resolve = (name) ->
-		mapping.set name count
+		mapping.set name, count
 		count++
 
 	{ resolve }
@@ -76,7 +76,7 @@ convert = (root) ->
 	playfield.stringify()
 
 
-{ sample1, sample2 } = fungify.samples
+{ sample1, sample2, sample3 } = fungify.samples
 
 
-console.log convert sample2
+console.log convert sample3
