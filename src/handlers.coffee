@@ -36,7 +36,7 @@ whileHandler = (recurse, node, place, resolve, line, column) ->
 	place (test1Loc.line + 2), jointColumn, '#'
 	place (test1Loc.line + 3), jointColumn, '<'
 
-	test2Loc = recurse test, body.line, column
+	test2Loc = recurse test, bodyLoc.line, column
 
 	place (test2Loc.line + 0), column, '>'
 	place (test2Loc.line + 1), column, 'v'
