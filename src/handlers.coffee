@@ -76,10 +76,10 @@ numberHandler = (recurse, node, place, resolve, line, column) ->
 	currentLine++
 
 	for index in [1...digits.length]
-		place (line + currentLine + 0), column, '9'
-		place (line + currentLine + 1), column, '*'
-		place (line + currentLine + 2), column, (String digits[index])
-		place (line + currentLine + 3), column, '+'
+		place (currentLine + 0), column, '9'
+		place (currentLine + 1), column, '*'
+		place (currentLine + 2), column, (String digits[index])
+		place (currentLine + 3), column, '+'
 		currentLine += 4
 
 	{
