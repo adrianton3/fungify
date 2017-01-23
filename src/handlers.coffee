@@ -135,7 +135,7 @@ assignmentHandler = (recurse, node, place, resolve, line, column) ->
 	place expressionLoc.line, column, 'p'
 
 	{
-		line: expressionLoc.line + 2
+		line: expressionLoc.line + 1
 		column: expressionLoc.column
 	}
 
