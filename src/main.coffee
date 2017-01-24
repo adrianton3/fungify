@@ -1,72 +1,7 @@
 'use strict'
 
 
-makeEnv = ->
-	count = 0
-	mapping = new Map
-
-	resolve = (name) ->
-		if mapping.has name
-			mapping.get name
-		else
-			prevCount = count
-			mapping.set name, count
-			count++
-			prevCount
-
-
-	{ resolve }
-
-
-makePlayfield = ->
-	playfield = new Map
-
-	max = {
-		line: 0
-		column: 0
-	}
-
-
-	place = (line, column, char) ->
-		max.line = Math.max max.line, line
-		max.column = Math.max max.column, column
-
-		(
-			if playfield.has line
-				playfield.get line
-			else
-				chars = new Map
-				playfield.set line, chars
-				chars
-		).set column, char
-
-		return
-
-
-	stringify = ->
-		lines = for i in [0..max.line]
-			if not playfield.has i
-				' '.repeat max.column
-			else
-				line = playfield.get i
-				chars = for j in [0..max.column]
-					if line.has j
-						line.get j
-					else
-						' '
-
-				chars.join ''
-
-		lines.join '\n'
-
-
-	{
-		place
-		stringify
-	}
-
-
-{ handlers } = fungify
+{ handlers, makePlayfield, makeEnv } = fungify
 
 
 convert = (root) ->
