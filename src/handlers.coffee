@@ -88,7 +88,19 @@ numberHandler = (recurse, node, place, resolve, line, column) ->
 	}
 
 
-opHandler = (recurse, node, place, resolve, line, column) ->
+unaryHandler = (recurse, node, place, resolve, line, column) ->
+	{ operator, expression } = node
+
+	expressionLoc = recurse expression, line, column
+	place expressionLoc.line, column, operator
+
+	{
+		line: expressionLoc.line + 1
+		column: expressionLoc.column
+	}
+
+
+binaryHandler = (recurse, node, place, resolve, line, column) ->
 	{ left, operator, right } = node
 
 	leftLoc = recurse left, line, column
@@ -159,7 +171,8 @@ handlers = new Map [
 	['if', ifHandler]
 	['while', whileHandler]
 	['assignment', assignmentHandler]
-	['op', opHandler]
+	['unary', unaryHandler]
+	['binary', binaryHandler]
 	['number', numberHandler]
 	['var', varHandler]
 	['sub', subHandler]

@@ -17,7 +17,7 @@ convert = (root) ->
 	playfield.stringify()
 
 
-{ sample1, sample2, sample3, sample4 } = fungify.samples
-
-
-console.log convert sample4
+window.fungify ?= {}
+Object.assign window.fungify, {
+	convert
+}
