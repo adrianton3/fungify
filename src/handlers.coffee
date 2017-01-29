@@ -56,8 +56,8 @@ varHandler = (recurse, node, place, resolve, line, column) ->
 
 	address = resolve name
 
-	place (line + 0), column, '0'
-	place (line + 1), column, (String address)
+	place (line + 0), column, (String address)
+	place (line + 1), column, '0'
 	place (line + 2), column, 'g'
 
 	{
@@ -141,8 +141,8 @@ assignmentHandler = (recurse, node, place, resolve, line, column) ->
 
 	address = resolve name
 
-	place (line + 0), column, '0'
-	place (line + 1), column, (String address)
+	place (line + 0), column, (String address)
+	place (line + 1), column, '0'
 	expressionLoc = recurse expression, (line + 2), column
 	place expressionLoc.line, column, 'p'
 
