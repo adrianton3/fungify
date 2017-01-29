@@ -59,7 +59,7 @@ register 'do', (statements...) ->
 
 register 'set!', (name, expression) ->
 	nodes.makeAssignment(
-		name
+		name.token.value
 		buildAst expression
 	)
 
