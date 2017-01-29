@@ -1070,7 +1070,7 @@
       }
       this.field.push(line);
     }
-    this._initPathPlane(width, height);
+    this._initPathPlane(this.width, this.height);
     return this;
   };
 
