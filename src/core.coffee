@@ -12,7 +12,11 @@ convert = (root) ->
 		handler = handlers.get node.type
 		handler recurse, node, playfield.place, env.resolve, line, column
 
-	recurse root, 0, 0
+	playfield.place 0, 1, 'v'
+
+	programLoc = recurse root, 1, 1
+
+	playfield.place programLoc.line, 1, '@'
 
 	playfield.stringify()
 

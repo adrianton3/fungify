@@ -12,12 +12,27 @@ parse = (source) ->
 
 
 source = '''
-	(while
-		(< 1 2)
-		(printInt (+ 3 4)))
+	(do
+		(set! p 1)
+		(set! i 1)
+		(while (< i 5)
+			(do
+				(set! p (* p i))
+				(set! i (+ i 1))))
+		(printInt p))
 '''
 
 ast = parse source
-bef = convert ast
+befSource = convert ast
 
-console.log bef
+playfield = new bef.Playfield()
+playfield.fromString befSource
+
+runtime = new bef.EagerRuntime()
+runtime.execute(
+	playfield
+	{ jumpLimit: 1000 }
+	[]
+)
+
+console.log runtime.programState.outRecord.join ' '
