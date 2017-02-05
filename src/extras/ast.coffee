@@ -4,6 +4,13 @@
 { nodes } = fungify
 
 
+raise = (coords, message) ->
+	error = new Error message
+	error.coords = coords
+	throw error
+	return
+
+
 mapping = new Map
 
 register = Map.prototype.set.bind mapping
@@ -13,12 +20,12 @@ register 'not', (e) ->
 	nodes.makeUnary buildAst e
 
 
-register 'printChar', (e) ->
-	nodes.makeSub 'printChar', buildAst e
+register 'print-char', (e) ->
+	nodes.makeSub 'print-char', buildAst e
 
 
-register 'printInt', (e) ->
-	nodes.makeSub 'printInt', buildAst e
+register 'print-int', (e) ->
+	nodes.makeSub 'print-int', buildAst e
 
 
 registerBinary = (name, encoded, constructor) ->
@@ -53,8 +60,13 @@ register 'if', (test, consequent, alternate) ->
 	)
 
 
-register 'do', (statements...) ->
-	nodes.makeBlock statements.map buildAst
+do ->
+	doHandler = (statements...) ->
+		nodes.makeBlock statements.map buildAst
+
+	doHandler.anyArity = true
+
+	register 'do', doHandler
 
 
 register 'set!', (name, expression) ->
@@ -77,9 +89,15 @@ buildAst = (tree) ->
 		name = form.token.value
 
 		if not mapping.has name
-			throw 'Invalid syntax'
+			raise form.token.coords, "Unrecognised form: #{name}"
 
 		handler = mapping.get name
+
+		if not handler.anyArity and handler.length != args.length
+			raise form.token.coords, """
+					#{name} takes #{handler.length} arguments
+					but was given #{args.length} arguments
+				"""
 
 		handler args...
 

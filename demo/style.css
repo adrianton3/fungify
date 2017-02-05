@@ -1,0 +1,23 @@
+body {
+    background-color: hsl(79, 15%, 7%);
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.pane {
+    display: inline-block;
+    text-align: left;
+}
+
+.pane:first-child {
+    margin-right: 20px;
+}
+
+.editor {
+    width: 300px;
+    height: 300px;
+}

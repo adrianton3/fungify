@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>fungify</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <div class="pane">
+            <div>Input</div>
+            <div class= "editor" id="input-editor"></div>
+        </div>
+        <div class="pane">
+            <div>Output</div>
+            <div class= "editor" id="output-editor"></div>
+        </div>
+    </div>
+
+    <script src="lib/ace/ace.js"></script>
+    <script src="lib/ace/theme-monokai.js"></script>
+
     <script src="lib/espace.min.js"></script>
     <script src="lib/befunjit.browser.js"></script>
 

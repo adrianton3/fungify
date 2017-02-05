@@ -157,7 +157,7 @@ subHandler = (recurse, node, place, resolve, line, column) ->
 
 	expressionLoc = recurse expression, line, column
 
-	instruction = if name == 'printChar' then ',' else '.'
+	instruction = if name == 'print-char' then ',' else '.'
 	place expressionLoc.line, column, instruction
 
 	{
