@@ -22,6 +22,20 @@ setupEditors = ->
 	}
 
 
+setupSamples = (samples, input) ->
+	select = document.getElementById 'sample'
+
+	(Object.keys samples).forEach (sampleName) ->
+		option = document.createElement 'option'
+		option.textContent = sampleName
+		select.appendChild option
+		return
+
+	select.addEventListener 'change', ->
+		input.setValue samples[@value], 1
+		return
+
+
 parse = (source) ->
 	options = { coords: true }
 	tokens = (Tokenizer options) source
@@ -31,6 +45,7 @@ parse = (source) ->
 
 main = (initialSource) ->
 	{ input, output } = setupEditors()
+	setupSamples window.samples, input
 
 	errorLine = null
 
