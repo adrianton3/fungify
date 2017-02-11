@@ -6,9 +6,15 @@
 
 
 setupEditors = ->
-	input = ace.edit 'input-editor'
-	input.setTheme 'ace/theme/monokai'
-	input.setFontSize 14
+	inSource = ace.edit 'in-source-editor'
+	inSource.setTheme 'ace/theme/monokai'
+	inSource.setFontSize 14
+
+	outBefunge = ace.edit 'out-befunge-editor'
+	outBefunge.setTheme 'ace/theme/monokai'
+	outBefunge.getSession().setUseWrapMode true
+	outBefunge.setReadOnly true
+	outBefunge.setFontSize 14
 
 	output = ace.edit 'output-editor'
 	output.setTheme 'ace/theme/monokai'
@@ -17,12 +23,13 @@ setupEditors = ->
 	output.setFontSize 14
 
 	{
-		input
+		inSource
+		outBefunge
 		output
 	}
 
 
-setupSamples = (samples, input) ->
+setupSamples = (samples, inSource) ->
 	select = document.getElementById 'sample'
 
 	(Object.keys samples).forEach (sampleName) ->
@@ -32,8 +39,19 @@ setupSamples = (samples, input) ->
 		return
 
 	select.addEventListener 'change', ->
-		input.setValue samples[@value], 1
+		inSource.setValue samples[@value], 1
 		return
+
+
+setupExecute = (outputBefunge, output) ->
+	button = document.getElementById 'execute'
+	button.addEventListener 'click', ->
+		source = outputBefunge.getValue()
+		result = execute source
+		output.setValue result, 1
+		return
+
+	return
 
 
 parse = (source) ->
@@ -44,8 +62,9 @@ parse = (source) ->
 
 
 main = (initialSource) ->
-	{ input, output } = setupEditors()
-	setupSamples window.samples, input
+	{ inSource, outBefunge, output } = setupEditors()
+	setupSamples window.samples, inSource
+	setupExecute outBefunge, output
 
 	errorLine = null
 
@@ -58,10 +77,10 @@ main = (initialSource) ->
 
 
 	onSuccess = (convertedText) ->
-		output.setValue convertedText, 1
+		outBefunge.setValue convertedText, 1
 
 		if errorLine != null
-			input.getSession().setAnnotations []
+			inSource.getSession().setAnnotations []
 			errorLine = null
 
 		return
@@ -70,7 +89,7 @@ main = (initialSource) ->
 	onError = (exception) ->
 		if exception.coords?
 			errorLine = exception.coords.line
-			input.getSession().setAnnotations([
+			inSource.getSession().setAnnotations([
 				row: errorLine - 1
 				text: exception.message
 				type: 'error'
@@ -88,20 +107,19 @@ main = (initialSource) ->
 		return
 
 
-	input.getSession().on 'change', () ->
-		tryParse input.getValue()
+	inSource.getSession().on 'change', () ->
+		tryParse inSource.getValue()
 
 		return
 
 
-	input.setValue initialSource, 1
+	inSource.setValue initialSource, 1
 
 	return
 
 
 execute = (source) ->
-	playfield = new bef.Playfield()
-	playfield.fromString source
+	playfield = new bef.Playfield source
 
 	runtime = new bef.EagerRuntime()
 	runtime.execute(
