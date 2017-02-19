@@ -98,7 +98,7 @@
     jointColumn = Math.max(leftLoc.column, rightLoc.column);
     return {
       line: rightLoc.line + 1,
-      column: jointColumn + 1
+      column: jointColumn
     };
   };
 
