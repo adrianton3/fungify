@@ -111,7 +111,7 @@ binaryHandler = (recurse, node, place, resolve, line, column) ->
 
 	{
 		line: rightLoc.line + 1
-		column: jointColumn + 1
+		column: jointColumn
 	}
 
 
